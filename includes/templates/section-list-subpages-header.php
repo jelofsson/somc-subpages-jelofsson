@@ -11,7 +11,7 @@
  */
 ?>
 <section class="list">
-    <button class="sort-btn" data-order="asc">Sort ASC</button>
-    <button class="sort-btn" data-order="desc">Sort DESC</button>
+    <button class="sort-btn" data-order="asc">ASC</button>
+    <button class="sort-btn" data-order="desc">DESC</button>
     <button class="show-btn">_</button>
     <ul class="sortable-elements">

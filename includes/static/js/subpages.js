@@ -13,8 +13,8 @@ var Subpages = (function ($) {
     Subpages.prototype.addEvents = function () {
         $('.sort-btn').on('click', function (e) {
             // Remove all events, since dom will be updated
-            $('.sort-btn').off("click", "**");
-            $('.show-btn').off("click", "**");
+            $('.sort-btn').off('click');
+            $('.show-btn').off('click');
 
             // Get array of elements
             this.elements = $(e.target).parent('.list').children('.sortable-elements').children('li');
