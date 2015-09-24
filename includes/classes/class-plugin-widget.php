@@ -77,6 +77,7 @@ class Plugin_Widget extends WP_Widget
         ));
         
         $this->_defineWidgetHooks();
+        $this->_defineWidgetFilters();
 	}
 
 	/**
@@ -228,5 +229,11 @@ class Plugin_Widget extends WP_Widget
             register_widget(__CLASS__);
         });
 
+    }
+    
+    private function _defineWidgetFilters()
+    {
+        // Truncate our title to 20 characters.
+        add_filter( 'the_title', array( Helper_Text, 'Truncate' ) );
     }
 }
