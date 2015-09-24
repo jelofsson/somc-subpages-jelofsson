@@ -10,7 +10,7 @@ It is compitable with Wordpress 3.5+ plugin and follows the Wordpress.org [codin
 
 1. Download and install [Wordpress](http://www.wordpress.org/)
 
-2. Clone project and install from `dist/somc-subpages-jelofsson.zip` in your Wordpress plugins section
+2. Clone project and install `dist/somc-subpages-jelofsson.zip` in Wordpress
 
 3. Activate plugin
 
