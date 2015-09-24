@@ -35,7 +35,7 @@ class Helper_Text
         // take off chars for the trailing
         $length -= strlen($trailing);
         
-        if(strlen($str) > $length) 
+        if ( strlen( $str ) > $length ) 
         {
             // string exceeded length, truncate and add trailing dots
             return substr( $str, 0, $length ) . $trailing;

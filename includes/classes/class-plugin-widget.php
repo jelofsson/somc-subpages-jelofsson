@@ -137,7 +137,7 @@ class Plugin_Widget extends WP_Widget
         echo $before_widget;
         
         // output our widget
-        if( count($array_subpages) > 0 ) {
+        if ( 0 < count($array_subpages) ) {
             $this->_output_subpages_of_post($post_id, $array_subpages);
             
             // enqueue scripts needed for the widget to work properly
@@ -164,12 +164,13 @@ class Plugin_Widget extends WP_Widget
         // functions like the_title() don't work properly. 
         global $post;
         
-        $direct_children = $this->_direct_children_of_post($post_id, $array_subpages);
+        $first_children = $this->_first_children_of_post( $post_id, $array_subpages );
 
         include( plugin_dir_path( __FILE__ ) . 
                     '../templates/section-list-subpages-header.php' );
         
-        foreach($direct_children as $post)
+        // output our array of child posts, as an sortable list
+        foreach($first_children as $post)
         {
             setup_postdata( $post );
             
@@ -178,8 +179,8 @@ class Plugin_Widget extends WP_Widget
             include( plugin_dir_path( __FILE__ ) . 
                     '../templates/section-list-subpages-item.php' );
             
-            // Check if subpage has children
-            if( $this->_has_children($post->ID, $array_subpages) ) {
+            // if the child has its own children, we output them as an sortable list aswell
+            if ( $this->_has_children( $post->ID, $array_subpages ) ) {
                 $this->_output_subpages_of_post( $post->ID, $array_subpages );
             }
             
@@ -199,20 +200,20 @@ class Plugin_Widget extends WP_Widget
      */
     private function _has_children($post_id, $array_subpages)
     {
-        return count( $this->_direct_children_of_post( $post_id, $array_subpages ) ) ? true: false;
+        return count( $this->_first_children_of_post( $post_id, $array_subpages ) ) ? true: false;
     }
     
     /**
-     * Return only subpages one level under post_id
+     * Return only subpages one level below the post_id
      * 
      * @param  integer $post_id        id of post
      * @param  array   $array_subpages array of subpages
      * @return array   array of subpages
      */
-    private function _direct_children_of_post($post_id, $array_subpages)
+    private function _first_children_of_post($post_id, $array_subpages)
     {
         return array_filter($array_subpages, function($subpage) use ($post_id) {
-            return ($subpage->post_parent == $post_id) ? true : false;
+            return ( $post_id == $subpage->post_parent ) ? true : false;
         });
     }
     
@@ -226,14 +227,17 @@ class Plugin_Widget extends WP_Widget
      */
     private function _define_widget_hooks()
     {
-        add_action('widgets_init', function() {
-            register_widget(__CLASS__);
+        add_action( 'widgets_init' , function () {
+            register_widget( __CLASS__ );
         });
 
     }
     
     /**
      * Register filters used by our plugin
+     * 
+     * @since  1.0.0
+     * @access private
      */
     private function _define_widget_filters()
     {
