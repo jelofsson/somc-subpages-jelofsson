@@ -16,7 +16,7 @@
 /**
  * Helper_Text class
  * 
- * Text helpers for parsing text.
+ * Contains static helper functions for parsing text.
  *
  * @since      1.0.0
  */
@@ -33,11 +33,12 @@ class Helper_Text
     public static function Truncate($str, $length=20, $trailing='...') 
     {
         // take off chars for the trailing
-        $length-=strlen($trailing);
-        if (strlen($str) > $length) 
+        $length -= strlen($trailing);
+        
+        if(strlen($str) > $length) 
         {
             // string exceeded length, truncate and add trailing dots
-            return substr($str,0,$length).$trailing;
+            return substr( $str, 0, $length ) . $trailing;
         } 
         else 
         { 

@@ -76,8 +76,8 @@ class Plugin_Widget extends WP_Widget
             $this->_identifier
         ));
         
-        $this->_defineWidgetHooks();
-        $this->_defineWidgetFilters();
+        $this->_define_widget_hooks();
+        $this->_define_widget_filters();
 	}
 
 	/**
@@ -108,6 +108,7 @@ class Plugin_Widget extends WP_Widget
     {
         // get old instance
 		$instance = $old_instance;
+        
         // set instance value
         $instance['number'] = strip_tags($new_instance['number']);
 
@@ -125,19 +126,19 @@ class Plugin_Widget extends WP_Widget
     {
         extract($args);
         
-        // Set up the objects needed
+        // set up the objects needed
         $post_id = get_the_ID();
         $wp_query = new WP_Query();
         $pages_and_posts_types = $wp_query->query(array('post_type' => array('page','post')));
         
-        // Filter through all pages and find the page children's
+        // filter through all pages and find the page children's
         $array_subpages = get_page_children( $post_id, $pages_and_posts_types );
         
         echo $before_widget;
         
-        // Output our widget
+        // output our widget
         if( count($array_subpages) > 0 ) {
-            $this->_outputSubpagesOfPost($post_id, $array_subpages);
+            $this->_output_subpages_of_post($post_id, $array_subpages);
             
             // enqueue scripts needed for the widget to work properly
             wp_enqueue_script( 'jquery', plugin_dir_url( __FILE__ ) . '../thirdparty/jquery-1.11.3.min.js', array(), '1.11.3', true );
@@ -155,15 +156,15 @@ class Plugin_Widget extends WP_Widget
      * @param integer $post_id        id of post
      * @param array   $array_subpages array of all available subpages
      */
-    private function _outputSubpagesOfPost($post_id, $array_subpages)
+    private function _output_subpages_of_post($post_id, $array_subpages)
     {
         
-        // Since we are using setup_postdata() on WP_Post objects 
+        // since we are using setup_postdata() on WP_Post objects 
         // we need to reference to the global $post variable, otherwise 
         // functions like the_title() don't work properly. 
         global $post;
         
-        $direct_children = $this->_directChildrenOfPost($post_id, $array_subpages);
+        $direct_children = $this->_direct_children_of_post($post_id, $array_subpages);
 
         include( plugin_dir_path( __FILE__ ) . 
                     '../templates/section-list-subpages-header.php' );
@@ -178,8 +179,8 @@ class Plugin_Widget extends WP_Widget
                     '../templates/section-list-subpages-item.php' );
             
             // Check if subpage has children
-            if( $this->_hasChildren($post->ID, $array_subpages) ) {
-                $this->_outputSubpagesOfPost( $post->ID, $array_subpages );
+            if( $this->_has_children($post->ID, $array_subpages) ) {
+                $this->_output_subpages_of_post( $post->ID, $array_subpages );
             }
             
             echo '</li>';
@@ -196,9 +197,9 @@ class Plugin_Widget extends WP_Widget
      * @param  array   $array_subpages array of subpages
      * @return boolean
      */
-    private function _hasChildren($post_id, $array_subpages)
+    private function _has_children($post_id, $array_subpages)
     {
-        return count( $this->_directChildrenOfPost( $post_id, $array_subpages ) ) ? true: false;
+        return count( $this->_direct_children_of_post( $post_id, $array_subpages ) ) ? true: false;
     }
     
     /**
@@ -208,7 +209,7 @@ class Plugin_Widget extends WP_Widget
      * @param  array   $array_subpages array of subpages
      * @return array   array of subpages
      */
-    private function _directChildrenOfPost($post_id, $array_subpages)
+    private function _direct_children_of_post($post_id, $array_subpages)
     {
         return array_filter($array_subpages, function($subpage) use ($post_id) {
             return ($subpage->post_parent == $post_id) ? true : false;
@@ -223,7 +224,7 @@ class Plugin_Widget extends WP_Widget
      * @since  1.0.0
      * @access private
      */
-    private function _defineWidgetHooks()
+    private function _define_widget_hooks()
     {
         add_action('widgets_init', function() {
             register_widget(__CLASS__);
@@ -231,7 +232,10 @@ class Plugin_Widget extends WP_Widget
 
     }
     
-    private function _defineWidgetFilters()
+    /**
+     * Register filters used by our plugin
+     */
+    private function _define_widget_filters()
     {
         // Truncate our title to 20 characters.
         add_filter( 'the_title', array( Helper_Text, 'Truncate' ) );

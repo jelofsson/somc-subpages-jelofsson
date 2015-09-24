@@ -1,10 +1,12 @@
 var Subpages = (function ($) {
+    
+    'use strict';
 
     function Subpages() {
         // Dom is ready
         $(function () {
 
-            // Add all our events
+            // add all our events
             this.addEvents();
 
         }.bind(this));
@@ -12,32 +14,32 @@ var Subpages = (function ($) {
 
     Subpages.prototype.addEvents = function () {
         $('.sort-btn').on('click', function (e) {
-            // Remove all events, since dom will be updated
+            // remove all events, since dom will be updated
             $('.sort-btn').off('click');
             $('.show-btn').off('click');
 
-            // Get array of elements
+            // get array of elements
             this.elements = $(e.target).parent('.list').children('.sortable-elements').children('li');
 
-            // Get order
+            // get order
             var order = $(e.target).data('order');
 
-            // Sort them
+            // sort them
             this.sortElements(this.elements, order);
         }.bind(this));
         
-        $('.show-btn').on('click', function(e) {
+        $('.show-btn').on('click', function (e) {
             // Toggle visibility of elements
             $(e.target).parent('.list').children('.sortable-elements').toggle();
         });
-    }
+    };
 
     Subpages.prototype.sortElements = function (element, order) {
 
-        // Set default order if not set as param
+        // set default order if not set as param
         order = order ? order : 'asc';
 
-        // Sort the elements based on its text content
+        // sort the elements based on its text content
         element.sort(function (a, b) {
 
             var aList, bList;
@@ -60,9 +62,9 @@ var Subpages = (function ($) {
             }
         });
 
-        // Put sorted results back on page
+        // put sorted results back on page
         $(element).parent().html(element);
-        // Since dom is update we must add all events again
+        // since dom is update we must add all events again
         this.addEvents();
     }
 

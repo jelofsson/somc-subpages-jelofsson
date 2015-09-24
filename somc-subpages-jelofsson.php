@@ -23,9 +23,7 @@
  * License: MIT
  */
 
-/*
- * If this file is called directly, abort.
- */
+// if this file is called directly, abort.
 if ( ! defined( 'WPINC' )) {
 	die;
 }
