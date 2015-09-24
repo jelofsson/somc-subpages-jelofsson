@@ -16,7 +16,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: SOMC Subpages
- * Description: Display subpages trough a widget or shortcode
+ * Description: Display subpages of current page/post with widget or shortcode
  * Version: 1.0.0
  * Author: Jimmi Elofsson
  * Author URI: http://www.jimmi.eu/
