@@ -3,6 +3,14 @@ section.list, section.list > button {
     font-weight: 300;
 }
 
+section.list > button {
+    font-size: 0.8em;
+    padding: 0.5em;
+    color: #FFF;
+    background-color: #333;
+    border: none;
+}
+
 ul.sortable-elements {
     margin: 5px 0 0 15px;
     list-style-type: none;

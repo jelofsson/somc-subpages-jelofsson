@@ -93,7 +93,7 @@ class Plugin_Widget extends WP_Widget
         $number = ($instance) ? esc_attr($instance['number']) : 5;
         
         // output the form
-        include( plugin_dir_path( __FILE__ ) . 'includes/templates/form.php');
+        include( plugin_dir_path( __FILE__ ) . '../templates/form.php');
 	}
 
 	/**
@@ -233,23 +233,29 @@ class Plugin_Widget extends WP_Widget
         });
     }
     
-    
+    /**
+     * Register shortcodes used by this plugin
+     * 
+     * @since 1.0.0
+     * @access private
+     */
     private function _define_widget_shortcodes()
     {
+        // shortcode for displaying our widget somewhere outside the default sidebar.
         add_shortcode( $this->name, function () {
              the_widget( __CLASS__ );
         });
     }
     
     /**
-     * Register filters used by our plugin
+     * Register filters used by this plugin
      * 
      * @since  1.0.0
      * @access private
      */
     private function _define_widget_filters()
     {
-        // Truncate our title to 20 characters.
+        // truncate our title to 20 characters.
         add_filter( 'the_title', array( Helper_Text, 'Truncate' ) );
     }
 }
