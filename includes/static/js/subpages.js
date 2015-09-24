@@ -29,9 +29,9 @@ var Subpages = (function ($) {
         }.bind(this));
         
         $('.show-btn').on('click', function (e) {
-            // Toggle visibility of elements
+            // toggle visibility of elements
             $(e.target).parent('.list').children('.sortable-elements').toggle();
-        });
+        }.bind(this));
     };
 
     Subpages.prototype.sortElements = function (element, order) {

@@ -37,5 +37,3 @@ require plugin_dir_path( __FILE__ ) . '/includes/classes/class-helper-text.php';
 
 // creating an instance of our plugin
 $plugin = new Plugin_Widget();
-
-//add_shortcode( 'subpages', array( &$plugin, 'widget' ) );

@@ -67,7 +67,7 @@ class Plugin_Widget extends WP_Widget
     public function __construct() 
     {
         $this->_version    = '1.0.0';
-        $this->name        = 'SOMC Subpages';
+        $this->name        = 'somc-subpages-jelofsson';
         $this->_identifier = urlencode($this->name);
         
         // instantiate the parent object
@@ -77,6 +77,7 @@ class Plugin_Widget extends WP_Widget
         ));
         
         $this->_define_widget_hooks();
+        $this->_define_widget_shortcodes();
         $this->_define_widget_filters();
 	}
 
@@ -230,7 +231,14 @@ class Plugin_Widget extends WP_Widget
         add_action( 'widgets_init' , function () {
             register_widget( __CLASS__ );
         });
-
+    }
+    
+    
+    private function _define_widget_shortcodes()
+    {
+        add_shortcode( $this->name, function () {
+             the_widget( __CLASS__ );
+        });
     }
     
     /**
