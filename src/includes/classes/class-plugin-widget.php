@@ -88,10 +88,7 @@ class Plugin_Widget extends WP_Widget
      * @param array $instance
      */
 	public function form($instance) 
-    {	
-        // check value
-        $number = ($instance) ? esc_attr($instance['number']) : 5;
-        
+    {
         // output the form
         include( plugin_dir_path( __FILE__ ) . '../templates/form.php');
 	}
@@ -110,8 +107,9 @@ class Plugin_Widget extends WP_Widget
         // get old instance
 		$instance = $old_instance;
         
-        // set instance value
-        $instance['number'] = strip_tags($new_instance['number']);
+        // here we would change instance values if we used options in our widget.
+        // ex:
+        // $instance['number'] = strip_tags($new_instance['number']);
 
         return $instance;
 	}
@@ -159,10 +157,9 @@ class Plugin_Widget extends WP_Widget
      */
     private function _output_subpages_of_post($post_id, $array_subpages)
     {
-        
         // since we are using setup_postdata() on WP_Post objects 
         // we need to reference to the global $post variable, otherwise 
-        // functions like the_title() don't work properly. 
+        // functions like the_title() won't work properly. 
         global $post;
         
         $first_children = $this->_first_children_of_post( $post_id, $array_subpages );
@@ -190,6 +187,10 @@ class Plugin_Widget extends WP_Widget
         
         include( plugin_dir_path( __FILE__ ) . 
                     '../templates/section-list-subpages-footer.php' );
+        
+        // reset the global postdata, since we 
+        // altered it during our output
+        wp_reset_postdata();
     }
     
     /**
