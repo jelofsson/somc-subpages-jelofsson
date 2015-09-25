@@ -151,12 +151,14 @@ class Plugin_Widget extends WP_Widget
      * The list is recruseviley
      * 
      * @param integer $post_id        id of post
-     * @param array   $array_subpages array of all available subpages
+     * @param array   $array_posts array of all available posts
      */
-    private function _output_subpages_of_post($post_id, $array_subpages)
+    private function _output_subpages_of_post($post_id, $array_posts)
     {   
-        $first_children = $this->_first_children_of_post( $post_id, $array_subpages );
-
+        // retrieve the first level of childs of post_id in array_subpages
+        $first_children = $this->_first_children_of_post( $post_id, $array_posts );
+        
+        // section header
         include( plugin_dir_path( __FILE__ ) . 
                     '../templates/section-list-subpages-header.php' );
         
@@ -169,40 +171,41 @@ class Plugin_Widget extends WP_Widget
                     '../templates/section-list-subpages-post.php' );
             
             // if the child has its own children, we output them as an sortable list aswell
-            if ( $this->_has_children( $post->ID, $array_subpages ) ) {
-                $this->_output_subpages_of_post( $post->ID, $array_subpages );
+            if ( $this->_has_children( $post->ID, $array_posts ) ) {
+                $this->_output_subpages_of_post( $post->ID, $array_posts );
             }
             
             echo '</li>';
         }
         
+        // section footer
         include( plugin_dir_path( __FILE__ ) . 
                     '../templates/section-list-subpages-footer.php' );
     }
     
     /**
-     * Check if post has children in array_subpages
+     * Check if post has children in array_posts
      * 
-     * @param  integer $post_id        id of post
-     * @param  array   $array_subpages array of subpages
+     * @param  integer $post_id     id of post
+     * @param  array   $array_posts array of posts
      * @return boolean
      */
-    private function _has_children($post_id, $array_subpages)
+    private function _has_children($post_id, $array_posts)
     {
-        return count( $this->_first_children_of_post( $post_id, $array_subpages ) ) ? true: false;
+        return count( $this->_first_children_of_post( $post_id, $array_posts ) ) ? true: false;
     }
     
     /**
      * Return only subpages one level below the post_id
      * 
      * @param  integer $post_id        id of post
-     * @param  array   $array_subpages array of subpages
+     * @param  array   $array_posts array of posts
      * @return array   array of subpages
      */
-    private function _first_children_of_post($post_id, $array_subpages)
+    private function _first_children_of_post($post_id, $array_posts)
     {
-        return array_filter($array_subpages, function($subpage) use ($post_id) {
-            return ( $post_id == $subpage->post_parent ) ? true : false;
+        return array_filter($array_posts, function($post) use ($post_id) {
+            return ( $post_id == $post->post_parent ) ? true : false;
         });
     }
     
