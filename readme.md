@@ -20,8 +20,8 @@ It is compitable with Wordpress 3.5+ and try to follow the Wordpress.org [coding
 
 `src/` contains all source files for this project.
 
-You'll find the core class in `src/includes/classes/class-plugin-widget.php`.
-(does most of the magic)
+You'll find the core class in `src/includes/classes/class-plugin-widget.php`
+(most of the magic happens here)
 
 Also `src/includes/static/js/subpages.js` contain the scripts for sorting the subpage lists.
     
