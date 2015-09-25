@@ -2,9 +2,9 @@
 
 ## About
 
-This is a plugin that will display subpages of the current page or post.
+Displays a sortable list of subpages for the current page or post.
 
-It is compitable with Wordpress 3.5+ plugin and follows the Wordpress.org [coding standard](https://make.wordpress.org/core/handbook/best-practices/).
+It is compitable with Wordpress 3.5+ and try to follow the Wordpress.org [coding standard](https://make.wordpress.org/core/handbook/best-practices/).
 
 ## Installation and usage
 
@@ -15,6 +15,14 @@ It is compitable with Wordpress 3.5+ plugin and follows the Wordpress.org [codin
 3. Activate plugin
 
 4. Add it to your sidebar from the widget section or to a post/page by using the shortcode `[somc-subpages-jelofsson]`
+
+## Developer
+
+`src/` contains all source files for this project.
+
+You'll find the core class (that does most of the magic) in `src/includes/classes/class-plugin-widgt.php`.
+
+Also `src/includes/static/js/subpages.js` contain the scripts for sorting the subpage lists.
     
 ## Author
 
