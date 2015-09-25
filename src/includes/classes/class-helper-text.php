@@ -5,7 +5,7 @@
  *
  * A class that contains functions for parsing blocks of text or strings.
  *
- * @link       https://github.com/jelofsson
+ * @link       https://github.com/jelofsson/somc-subpages-jelofsson
  * @package    WordPress
  * @subpackage Component
  * @since      1.0.0

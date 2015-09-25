@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across 
  * both the public-facing side of the site and the admin area.
  *
- * @link       https://github.com/jelofsson
+ * @link       https://github.com/jelofsson/somc-subpages-jelofsson
  * @package    WordPress
  * @subpackage Component
  * @since      1.0.0
@@ -224,7 +224,7 @@ class Plugin_Widget extends WP_Widget
         });
     }
     
-    /**
+    /** 
      * Enqueue scripts and styles used by this plugin
      * 
      * This function enqueues javascript & css files so that WordPress

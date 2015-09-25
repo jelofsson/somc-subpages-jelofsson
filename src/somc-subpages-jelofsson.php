@@ -7,7 +7,7 @@
  * plugin admin area. This file also includes all of the dependencies used by
  * the plugin, and creates a instance of the core plugin class.
  * 
- * @link       https://github.com/jelofsson
+ * @link       https://github.com/jelofsson/somc-subpages-jelofsson
  * @package    WordPress
  * @subpackage Component
  * @since      1.0.0

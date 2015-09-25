@@ -4,7 +4,7 @@
  * 
  * This is the footer section of each subpages-level.
  *
- * @link       https://github.com/jelofsson
+ * @link       https://github.com/jelofsson/somc-subpages-jelofsson
  * @package    WordPress
  * @subpackage Component
  * @since      1.0.0
