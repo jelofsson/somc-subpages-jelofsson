@@ -78,7 +78,6 @@ class Plugin_Widget extends WP_Widget
         
         $this->_define_widget_hooks();
         $this->_define_widget_shortcodes();
-        $this->_define_widget_filters();
 	}
 
 	/**
@@ -140,10 +139,7 @@ class Plugin_Widget extends WP_Widget
             $this->_output_subpages_of_post($post_id, $array_subpages);
             
             // enqueue scripts needed for the widget to work properly
-            wp_enqueue_script( 'jquery', plugin_dir_url( __FILE__ ) . '../thirdparty/jquery-1.11.3.min.js', array(), '1.11.3', true );
-            wp_enqueue_script( $this->_identifier.'-subpages', plugin_dir_url( __FILE__ ) . '../static/js/subpages.js', array('jquery'), $this->_version, true );
-            wp_enqueue_style( $this->_identifier.'-subpages', plugin_dir_url( __FILE__ ) . '../static/css/subpages.css', array(), $this->_version, 'all' ); 
-            
+            $this->_define_widget_script_and_style();
         }
         
         echo $after_widget;
@@ -152,16 +148,13 @@ class Plugin_Widget extends WP_Widget
     /**
      * Outputs a sortable list of subpages
      * 
+     * The list is recruseviley
+     * 
      * @param integer $post_id        id of post
      * @param array   $array_subpages array of all available subpages
      */
     private function _output_subpages_of_post($post_id, $array_subpages)
-    {
-        // since we are using setup_postdata() on WP_Post objects 
-        // we need to reference to the global $post variable, otherwise 
-        // functions like the_title() won't work properly. 
-        global $post;
-        
+    {   
         $first_children = $this->_first_children_of_post( $post_id, $array_subpages );
 
         include( plugin_dir_path( __FILE__ ) . 
@@ -170,12 +163,10 @@ class Plugin_Widget extends WP_Widget
         // output our array of child posts, as an sortable list
         foreach($first_children as $post)
         {
-            setup_postdata( $post );
-            
             echo '<li>';
             
             include( plugin_dir_path( __FILE__ ) . 
-                    '../templates/section-list-subpages-item.php' );
+                    '../templates/section-list-subpages-post.php' );
             
             // if the child has its own children, we output them as an sortable list aswell
             if ( $this->_has_children( $post->ID, $array_subpages ) ) {
@@ -187,10 +178,6 @@ class Plugin_Widget extends WP_Widget
         
         include( plugin_dir_path( __FILE__ ) . 
                     '../templates/section-list-subpages-footer.php' );
-        
-        // reset the global postdata, since we 
-        // altered it during our output
-        wp_reset_postdata();
     }
     
     /**
@@ -235,6 +222,22 @@ class Plugin_Widget extends WP_Widget
     }
     
     /**
+     * Enqueue scripts and styles used by this plugin
+     * 
+     * This function enqueues javascript & css files so that WordPress
+     * will include them in the head of the current page on runtime.
+     * 
+     * @since 1.0.0
+     * @access private
+     */
+    private function _define_widget_script_and_style()
+    {
+        wp_enqueue_script( 'jquery', plugin_dir_url( __FILE__ ) . '../thirdparty/jquery-1.11.3.min.js', array(), '1.11.3', true );
+        wp_enqueue_script( $this->_identifier.'-subpages', plugin_dir_url( __FILE__ ) . '../static/js/subpages.js', array('jquery'), $this->_version, true );
+        wp_enqueue_style( $this->_identifier.'-subpages', plugin_dir_url( __FILE__ ) . '../static/css/subpages.css', array(), $this->_version, 'all' ); 
+    }
+    
+    /**
      * Register shortcodes used by this plugin
      * 
      * @since 1.0.0
@@ -244,19 +247,7 @@ class Plugin_Widget extends WP_Widget
     {
         // shortcode for displaying our widget somewhere outside the default sidebar.
         add_shortcode( $this->name, function () {
-             the_widget( __CLASS__ );
+             the_widget( __CLASS__ , '', 'before_widget=<p>&after_widget=</p>');
         });
-    }
-    
-    /**
-     * Register filters used by this plugin
-     * 
-     * @since  1.0.0
-     * @access private
-     */
-    private function _define_widget_filters()
-    {
-        // truncate our title to 20 characters.
-        add_filter( 'the_title', array( Helper_Text, 'Truncate' ) );
     }
 }

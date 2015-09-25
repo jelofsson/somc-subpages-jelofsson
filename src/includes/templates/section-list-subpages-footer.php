@@ -1,6 +1,8 @@
 <?php
 /**
  * Provide a list of subpages for current page
+ * 
+ * This is the footer section of each subpages-level.
  *
  * @link       https://github.com/jelofsson
  * @package    WordPress
