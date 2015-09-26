@@ -148,7 +148,7 @@ class Plugin_Widget extends WP_Widget
     /**
      * Outputs a sortable list of subpages
      * 
-     * The list is recruseviley
+     * The list of subpages are all children of the given post_id
      * 
      * @param integer $post_id        id of post
      * @param array   $array_posts array of all available posts
